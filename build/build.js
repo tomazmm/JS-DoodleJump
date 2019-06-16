@@ -1,3 +1,42 @@
+var Doodle = (function () {
+    function Doodle(x, y, size) {
+        this.FELL_OUT_OF_WINDOW = 0;
+        this.x_ = x;
+        this.y_ = y;
+        this.size_ = size;
+    }
+    Doodle.prototype.draw = function () {
+        this.shape = square(this.x_, this.y_, this.size_, 20);
+    };
+    Doodle.prototype.fall = function () {
+        this.y_ += 3;
+        if (this.y_ + this.size_ > windowHeight) {
+            return this.FELL_OUT_OF_WINDOW;
+        }
+    };
+    return Doodle;
+}());
+var Playground = (function () {
+    function Playground() {
+    }
+    Playground.prototype.setup = function () {
+        background(200);
+        this.doodle = new Doodle(windowWidth / 2, windowHeight / 2, 55);
+    };
+    Playground.prototype.draw = function () {
+        clear();
+        background(200);
+        if (this.doodle.fall() == this.doodle.FELL_OUT_OF_WINDOW) {
+            this.gameOver();
+        }
+        this.doodle.draw();
+    };
+    Playground.prototype.gameOver = function () {
+        console.log("Stop looping");
+        noLoop();
+    };
+    return Playground;
+}());
 var Morph = (function () {
     function Morph() {
     }
@@ -93,17 +132,19 @@ var Shapes = (function () {
     };
     return Shapes;
 }());
-var morph;
+var playground;
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    morph = new Morph();
-    morph.setup();
+    playground = new Playground;
+    playground.setup();
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 function draw() {
-    background(100);
-    morph.draw();
+    playground.draw();
+}
+function mousePressed() {
+    noLoop();
 }
 //# sourceMappingURL=build.js.map

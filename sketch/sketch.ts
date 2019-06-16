@@ -1,8 +1,9 @@
-let morph: Morph;
+let playground: Playground;
+
 function setup() {
     createCanvas(windowWidth, windowHeight)
-    morph = new Morph();
-    morph.setup();
+    playground  = new Playground;
+    playground.setup();
 }
 
 function windowResized() {
@@ -10,6 +11,9 @@ function windowResized() {
 }
 
 function draw() {
-    background(100);
-    morph.draw();
+    playground.draw();
 }
+
+function mousePressed() {
+    noLoop();
+  } 
